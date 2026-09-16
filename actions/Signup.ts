@@ -1,4 +1,5 @@
 "use server";
+import { signupSchema } from "@/schemas/signup.schema";
 
 const SignUp = async(
     previousState: any,
@@ -12,6 +13,17 @@ const SignUp = async(
             email: formData.get("email"),
             password: formData.get("password")
         }
+
+        const validationResult = signupSchema.safeParse(userData);
+
+        if(!validationResult.success) {
+            return {
+                success: false,
+                message: validationResult.error.issues[0].message
+            }
+        }
+
+        const validatedData = validationResult.data;
         const url = `${process.env.BASE_URL}/auth/sign-up`;
 
         const res = await fetch(url, {
@@ -19,7 +31,7 @@ const SignUp = async(
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(validatedData)
         })
 
         const data = await res.json();
