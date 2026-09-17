@@ -1,25 +1,21 @@
 "use client"
 
 import { useActionState } from "react";
-import SignUp from "@/actions/Signup";
+import SignIn from "@/actions/Signin";
 
-const SignupForm = () => {
+const SigninForm = () => {
 
         const initialState = {
         success: false,
         message: ""
     }
 
-    const [state, formAction] = useActionState(SignUp, initialState);
+    const [state, formAction] = useActionState(SignIn, initialState);
 
   return (
     <>
          <div className="mt-20">
             <form action={formAction}>
-                <label htmlFor="name">Enter your name:</label>
-                <br />
-                <input type="text" name="name" id="name" className="border" required/>
-               <br />
                 <label htmlFor="email">Enter your email:</label>
                 <br />
                 <input type="email" name="email" id="email" className="border" />
@@ -29,9 +25,9 @@ const SignupForm = () => {
                 <input type="password" name="password" className="border" id="password" />
                 <br />
 
-             <button className="mt-9 bg-blue-700 text-white p-3 font-bold cursor-pointer" type="submit"> Sign up</button>
+             <button className="mt-9 bg-blue-700 text-white p-3 font-bold cursor-pointer" type="submit"> Sign in</button>
 
- {state.message && (
+       {state.message && (
     <p className={state.success ? "text-green-700" : "text-red-700"}>
         {state.message}
     </p>
@@ -42,4 +38,4 @@ const SignupForm = () => {
   )
 }
 
-export default SignupForm
+export default SigninForm

@@ -1,20 +1,22 @@
 "use server";
-import { signupSchema } from "@/schemas/auth.schema";
 
-const SignUp = async(
+import { signinSchema } from "@/schemas/auth.schema";
+import { cookies } from "next/headers";
+
+
+const SignIn = async(
     previousState: any,
     formData: FormData
 ) => {
-
     try {
+        const url = `${process.env.BASE_URL}/auth/sign-in`
 
-        const userData = {
-            name: formData.get("name"),
+        const userDetails = {
             email: formData.get("email"),
             password: formData.get("password")
         }
 
-        const validationResult = signupSchema.safeParse(userData);
+        const validationResult = signinSchema.safeParse(userDetails);
 
         if(!validationResult.success) {
             return {
@@ -24,39 +26,45 @@ const SignUp = async(
         }
 
         const validatedData = validationResult.data;
-        const url = `${process.env.BASE_URL}/auth/sign-up`;
 
-        const res = await fetch(url, {
+        const res =  await fetch(url, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(validatedData)
         })
 
         const data = await res.json();
-        console.log("STATUS:", res.status);
-console.log("RESPONSE:", data);
+
         if(!res.ok) {
-            // throw new Error(`Failed to fetch ${res.status}: ${res.statusText}`)
             throw new Error(`${data.error}`)
         }
 
-        
         console.log(data);
-        return data;
-        
-    } catch (error) {
-        console.error(error);
 
+        const cookieStore = await cookies();
+
+cookieStore.set("token", data.data.token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+});
+
+        return data;
+
+
+    } catch (error) {
+       
         return {
             success: false,
             message: error instanceof Error ?
-            error.message 
+            error.message
             : "Something went wrong"
+
         }
     }
 }
 
-
-export default SignUp
+export default SignIn
