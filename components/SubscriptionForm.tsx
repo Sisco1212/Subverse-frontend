@@ -1,26 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { CreateSubscription } from "@/actions/Subscription";
+import { useActionState } from "react";
 
 const SubscriptionForm = () => {
-    const [subscriptionName, setSubscriptionName] = useState("");
-    const [subscriptionPrice, setSubscriptionPrice] = useState("");
-    const [currency, setCurrency] = useState("USD");
-    const [frequency, setFrequency] = useState("Daily");
-    const [category, setCategory] = useState("Entertainment");
-    const [paymentMethod, setPaymentMethod] = useState("");
-    const [startDate, setStartDate] = useState("");
+
+    const initialState = {
+        success: false,
+        message: ""
+    }
+
+    const [state, formAction] = useActionState(CreateSubscription, initialState)
 
     return (
         <>
-            <form action="">
+            <form action={formAction}>
                 <label>Subscription Name: </label>
                 <br />
                 <input
                     className="border"
                     type="text"
-                    value={subscriptionName}
-                    onChange={(e) => setSubscriptionName(e.target.value)}
+                    name="subscription-name"
+                    required
                 />
                 <br />
 
@@ -29,8 +30,8 @@ const SubscriptionForm = () => {
                 <input
                     className="border"
                     type="number"
-                    value={subscriptionPrice}
-                    onChange={(e) => setSubscriptionPrice(e.target.value)}
+                    name="subscription-price"
+
                 />
                 <br />
 
@@ -38,8 +39,9 @@ const SubscriptionForm = () => {
                 <br />
                 <select
                     className="border"
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
+                    defaultValue="USD"
+                    name="currency"
+                    required
                 >
                     <option value="USD">USD</option>
                     <option value="NGN">NGN</option>
@@ -51,9 +53,10 @@ const SubscriptionForm = () => {
                 <label>Frequency: </label>
                 <br />
                 <select
-                className="border"
-                    value={frequency}
-                    onChange={(e) => setFrequency(e.target.value)}
+                    className="border"
+                    defaultValue="Daily"
+                    name="frequency"
+                    required
                 >
                     <option value="Daily">Daily</option>
                     <option value="Weekly">Weekly</option>
@@ -66,8 +69,9 @@ const SubscriptionForm = () => {
                 <br />
                 <select
                     className="border"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    defaultValue="Entertainment"
+                    name="category"
+                    required
                 >
                     <option value="Entertainment">Entertainment</option>
                     <option value="News">News</option>
@@ -84,8 +88,8 @@ const SubscriptionForm = () => {
                 <input
                     className="border"
                     type="text"
-                    value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    name="payment-method"
+                    required
                 />
                 <br />
 
@@ -103,10 +107,22 @@ const SubscriptionForm = () => {
                 <input
                     className="border"
                     type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
+                    name="start-date"
+                    required
                 />
                 <br />
+
+                <button type="submit" className="bg-blue-700 text-white font-bold p-2 mt-3">
+                    Submit
+                </button>
+
+                {
+                    state.message && (
+                        <p className={`${state.success ? 'text-green-500' : 'text-red-500'}`}>
+                            {state.message}
+                        </p>
+                    )
+                }
             </form>
         </>
     );

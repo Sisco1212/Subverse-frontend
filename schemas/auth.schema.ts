@@ -5,7 +5,6 @@ export const signupSchema = z.object({
     .string()
     .min(3, "Name must be at least 3 characters"),
     email: z
-    .string()
     .email(),
     password: z
     .string()
@@ -14,7 +13,6 @@ export const signupSchema = z.object({
 
 export const signinSchema = z.object({
     email: z
-    .string()
     .email(),
     password: z
     .string()
