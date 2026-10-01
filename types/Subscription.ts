@@ -7,6 +7,27 @@ export interface ISubscription {
     category: string,
     paymentMethod: string,
     startDate: string,
-    status: string
+    status?: string
 }
 
+export interface UpdateSubscriptionProps {
+    id: string
+
+    original: {
+        name: string
+        price: number
+        currency: string
+        frequency: string
+        category: string
+        paymentMethod: string
+        startDate: string
+    }
+
+    name: string
+    price: number
+    currency: string
+    frequency: string
+    category: string
+    paymentMethod: string
+    startDate: string
+}

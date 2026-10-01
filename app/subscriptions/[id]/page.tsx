@@ -1,4 +1,9 @@
 import { GetSubscriptionDetails } from "@/actions/Subscription"
+import CancelSubscriptionBtn from "@/components/CancelSubscription"
+import DeleteSubscriptionBtn from "@/components/DeleteSubscriptionBtn"
+import SubscriptionDetails from "@/components/SubscriptionDetails"
+// import DeleteSubscriptionBtn from "@/components/DeleteSubscriptionBtn"
+// import UpdateSubscriptionForm from "@/components/UpdateSubscriptionForm"
 
 const SubscriptionPage = async(
     { params }: {
@@ -11,18 +16,16 @@ const SubscriptionPage = async(
     const data = await GetSubscriptionDetails(id)
     const subscriptionDetails = data.data
 
+        if(!data.success) {
+        return <p>{data.message}</p>
+    }
+
     return (
         <>
-        <p>Subscription details</p>
+      <SubscriptionDetails subscription={subscriptionDetails} />
+      <DeleteSubscriptionBtn id={id}/>
+      <CancelSubscriptionBtn  id={id}/>
 
-        <h1>{subscriptionDetails.name}</h1>
-        <h2>{subscriptionDetails.price}</h2>
-        <p>{subscriptionDetails.currency}</p>
-        <p>{subscriptionDetails.frequency}</p>
-        <p>{subscriptionDetails.category}</p>
-        <p>{subscriptionDetails.startDate}</p>
-        <p>{subscriptionDetails.paymentMethod}</p>
-        <p>{subscriptionDetails.status}</p>
         </>
     )
 }
