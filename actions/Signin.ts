@@ -2,69 +2,67 @@
 
 import { signinSchema } from "@/schemas/auth.schema";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-
-const SignIn = async(
-    previousState: any,
-    formData: FormData
+const SignIn = async (
+  previousState: any,
+  formData: FormData
 ) => {
-    try {
-        const url = `${process.env.BASE_URL}/auth/sign-in`
+  let data;
 
-        const userDetails = {
-            email: formData.get("email"),
-            password: formData.get("password")
-        }
+  try {
+    const url = `${process.env.BASE_URL}/auth/sign-in`;
 
-        const validationResult = signinSchema.safeParse(userDetails);
+    const userDetails = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
 
-        if(!validationResult.success) {
-            return {
-                success: false,
-                message: validationResult.error.issues[0].message
-            }
-        }
+    const validationResult = signinSchema.safeParse(userDetails);
 
-        const validatedData = validationResult.data;
+    if (!validationResult.success) {
+      return {
+        success: false,
+        message: validationResult.error.issues[0].message,
+      };
+    }
 
-        const res =  await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(validatedData)
-        })
+    const validatedData = validationResult.data;
 
-        const data = await res.json();
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(validatedData),
+    });
 
-        if(!res.ok) {
-            throw new Error(`${data.error}`)
-        }
+    data = await res.json();
 
-        console.log(data);
+    if (!res.ok) {
+      throw new Error(`${data.error}`);
+    }
 
-        const cookieStore = await cookies();
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong",
+    };
+  }
 
-cookieStore.set("token", data.data.token, {
+  const cookieStore = await cookies();
+
+  cookieStore.set("token", data.data.token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-});
+  });
 
-        return data;
+  redirect("/subscriptions");
+};
 
-
-    } catch (error) {
-       
-        return {
-            success: false,
-            message: error instanceof Error ?
-            error.message
-            : "Something went wrong"
-
-        }
-    }
-}
-
-export default SignIn
+export default SignIn;

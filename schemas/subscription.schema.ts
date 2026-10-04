@@ -9,7 +9,7 @@ export const subscriptionSchema = z.object({
     currency: z
     .enum(["USD", "NGN", "EUR", "GBP"]),
     frequency: z
-    .enum(["Daily", "Weekly", "Monthly", "Yearly"]),
+    .enum(["daily", "weekly", "monthly", "yearly"]),
     category: z
     .enum(["Entertainment", "News", "Lifestyle", "Technology", "Finance", "Politics", "Others"]),
     paymentMethod: z

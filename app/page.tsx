@@ -1,11 +1,5 @@
-export default function Home() {
-  
-  return (
-    <div >
-   <p className="text-center text-white font-bold text-2xl bg-black">
-     Subverse app
-    </p> 
+import LandingPage from "@/components/landing/landing-page";
 
-    </div>
-  );
+export default function Home() {
+  return <LandingPage />;
 }

@@ -1,62 +1,64 @@
 "use server";
+
 import { signupSchema } from "@/schemas/auth.schema";
+import { redirect } from "next/navigation";
 
-const SignUp = async(
-    previousState: any,
-    formData: FormData
+const SignUp = async (
+  previousState: any,
+  formData: FormData
 ) => {
+  let data;
 
-    try {
+  try {
+    const userData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
 
-        const userData = {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            password: formData.get("password")
-        }
+    const validationResult = signupSchema.safeParse(userData);
 
-        const validationResult = signupSchema.safeParse(userData);
-
-        if(!validationResult.success) {
-            return {
-                success: false,
-                message: validationResult.error.issues[0].message
-            }
-        }
-
-        const validatedData = validationResult.data;
-        const url = `${process.env.BASE_URL}/auth/sign-up`;
-
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(validatedData)
-        })
-
-        const data = await res.json();
-        console.log("STATUS:", res.status);
-console.log("RESPONSE:", data);
-        if(!res.ok) {
-            // throw new Error(`Failed to fetch ${res.status}: ${res.statusText}`)
-            throw new Error(`${data.error}`)
-        }
-
-        
-        console.log(data);
-        return data;
-        
-    } catch (error) {
-        console.error(error);
-
-        return {
-            success: false,
-            message: error instanceof Error ?
-            error.message 
-            : "Something went wrong"
-        }
+    if (!validationResult.success) {
+      return {
+        success: false,
+        message: validationResult.error.issues[0].message,
+      };
     }
-}
 
+    const validatedData = validationResult.data;
 
-export default SignUp
+    const url = `${process.env.BASE_URL}/auth/sign-up`;
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(validatedData),
+    });
+
+    data = await res.json();
+
+    console.log("STATUS:", res.status);
+    console.log("RESPONSE:", data);
+
+    if (!res.ok) {
+      throw new Error(`${data.error}`);
+    }
+
+  } catch (error) {
+    console.error(error);
+
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong",
+    };
+  }
+
+  redirect("/signin");
+};
+
+export default SignUp;

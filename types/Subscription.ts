@@ -6,8 +6,9 @@ export interface ISubscription {
     frequency: string,
     category: string,
     paymentMethod: string,
-    startDate: string,
-    status?: string
+    // startDate: string,
+    status?: string,
+    renewalDate: string,
 }
 
 export interface UpdateSubscriptionProps {
