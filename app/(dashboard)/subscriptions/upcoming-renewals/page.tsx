@@ -15,7 +15,7 @@ const UpcomingRenewalsPage = async() => {
     return (
         <>
          <div className="w-10/12 lg:w-8/12 m-auto">
-           <div className="mb-8">
+           <div className="my-8">
                     <h1 className="text-white font-bold text-3xl">
                         Upcoming renewals
                     </h1>
