@@ -73,6 +73,20 @@ const SubscriptionForm = () => {
         })
     }
 
+                const categoryColors: Record<string, string> = {
+        Entertainment: "bg-red-500 text-white",
+        Technology: "bg-blue-500 text-white",
+        Finance: "bg-emerald-500 text-white",
+        Lifestyle: "bg-pink-500 text-white",
+        News: "bg-orange-500 text-white",
+        Politics: "bg-purple-500 text-white",
+        Others: "bg-gray-500 text-white",
+    }
+
+      const categoryColor =
+        categoryColors[category] ??
+        categoryColors.Others
+
     return (
         <div className="min-h-screen bg-[#0d0d0d] text-white">
 
@@ -92,7 +106,7 @@ const SubscriptionForm = () => {
                             ←
                         </button>
 
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-lg font-bold text-black">
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold ${categoryColor}`}>
                             {name
                                 ? name.charAt(0).toUpperCase()
                                 : "S"}
@@ -451,7 +465,7 @@ const SubscriptionForm = () => {
 
                                     <div className="flex items-center gap-3">
 
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black">
+                                        <div className={`flex h-10 w-10 items-center justify-center rounded-full font-bold ${categoryColor}`}>
                                             {name
                                                 ? name
                                                     .charAt(0)

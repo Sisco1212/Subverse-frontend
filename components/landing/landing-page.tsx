@@ -187,29 +187,6 @@ function ArrowUpRight() {
     );
 }
 
-function LogoMark({ light = false }: { light?: boolean }) {
-    return (
-        <div
-            className={`flex h-8 w-8 items-center justify-center rounded-[10px] ${light ? "bg-white text-black" : "bg-[#b9dcff] text-black"
-                }`}
-        >
-            <svg
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-                aria-hidden="true"
-            >
-                <path
-                    d="M4 3.5V13.5M4 8.5H10.5C12.157 8.5 13.5 7.157 13.5 5.5C13.5 3.843 12.157 2.5 10.5 2.5H4"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                />
-            </svg>
-        </div>
-    );
-}
 
 export default function LandingPage() {
     return (
@@ -261,7 +238,7 @@ export default function LandingPage() {
 
                     <div className="flex items-center gap-3">
                         <Link
-                            href="/login"
+                            href="/signin"
                             className="hidden text-[13px] text-white/55 transition-colors hover:text-white sm:block"
                         >
                             Log in
@@ -353,7 +330,7 @@ export default function LandingPage() {
                                 </div>
 
                                 {/* Dashboard */}
-                                <div className="grid min-h-[430px] grid-cols-[150px_1fr]">
+                                <div className="grid min-h-[430px] md:grid-cols-[150px_1fr]">
                                     <aside className="hidden border-r border-white/[0.06] p-4 sm:block">
                                         <div className="mb-8 flex items-center gap-2">
                                              <Image
@@ -950,20 +927,13 @@ export default function LandingPage() {
 
                 <Reveal>
                     <div className="mx-auto max-w-[1200px] overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0a0a0a] px-6 py-20 text-center sm:px-10 sm:py-28">
-                        <div className="mx-auto mb-8 flex h-11 w-11 items-center justify-center rounded-[13px] bg-[#b9dcff] text-black shadow-[0_0_50px_rgba(185,220,255,0.15)]">
-                            <svg
-                                width="22"
-                                height="22"
-                                viewBox="0 0 17 17"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 3.5V13.5M4 8.5H10.5C12.157 8.5 13.5 7.157 13.5 5.5C13.5 3.843 12.157 2.5 10.5 2.5H4"
-                                    stroke="currentColor"
-                                    strokeWidth="1.7"
-                                    strokeLinecap="round"
-                                />
-                            </svg>
+                        <div className="mx-auto mb-8 flex h-11 w-11 items-center justify-center">
+                             <Image
+                            src={"/logo-white.png"}
+                            width={30}
+                            height={30}
+                            alt={"logo"}
+                        />
                         </div>
 
                         <h2 className="mx-auto max-w-[800px] text-5xl font-medium leading-[0.9] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
@@ -994,7 +964,12 @@ export default function LandingPage() {
                     <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
                         <div>
                             <Link href="/" className="flex items-center gap-2.5">
-                                <LogoMark light />
+                                      <Image
+                            src={"/logo-white.png"}
+                            width={30}
+                            height={30}
+                            alt={"logo"}
+                        />
                                 <span className="text-[15px] font-semibold tracking-[-0.02em]">
                                     subverse
                                 </span>
@@ -1033,7 +1008,7 @@ export default function LandingPage() {
                                 </p>
                                 <div className="space-y-2">
                                     <Link
-                                        href="/login"
+                                        href="/signin"
                                         className="block text-[11px] text-white/40 transition-colors hover:text-white"
                                     >
                                         Log in
