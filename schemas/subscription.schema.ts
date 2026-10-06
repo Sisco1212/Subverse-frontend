@@ -2,18 +2,18 @@ import { z } from "zod";
 
 export const subscriptionSchema = z.object({
     name: z
-    .string()
-    .min(2, "Subscription namme must be at least two characters"),
+        .string()
+        .min(2, "Subscription namme must be at least two characters"),
     price: z
-    .coerce.number(),
+        .coerce.number(),
     currency: z
-    .enum(["USD", "NGN", "EUR", "GBP"]),
+        .enum(["USD", "NGN", "EUR", "GBP"]),
     frequency: z
-    .enum(["daily", "weekly", "monthly", "yearly"]),
+        .enum(["daily", "weekly", "monthly", "yearly"]),
     category: z
-    .enum(["Entertainment", "News", "Lifestyle", "Technology", "Finance", "Politics", "Others"]),
+        .enum(["Entertainment", "News", "Lifestyle", "Technology", "Finance", "Politics", "Other"]),
     paymentMethod: z
-    .string(),
+        .string(),
     startDate: z
-    .coerce.date()
+        .coerce.date()
 })
