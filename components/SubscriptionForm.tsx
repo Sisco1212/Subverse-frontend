@@ -73,7 +73,7 @@ const SubscriptionForm = () => {
         })
     }
 
-                const categoryColors: Record<string, string> = {
+    const categoryColors: Record<string, string> = {
         Entertainment: "bg-red-500 text-white",
         Technology: "bg-blue-500 text-white",
         Finance: "bg-emerald-500 text-white",
@@ -83,7 +83,7 @@ const SubscriptionForm = () => {
         Others: "bg-gray-500 text-white",
     }
 
-      const categoryColor =
+    const categoryColor =
         categoryColors[category] ??
         categoryColors.Others
 
@@ -257,8 +257,8 @@ const SubscriptionForm = () => {
                                             Politics
                                         </option>
 
-                                        <option value="Others">
-                                            Others
+                                        <option value="Other">
+                                            Other
                                         </option>
                                     </select>
                                 </div>
@@ -429,18 +429,16 @@ const SubscriptionForm = () => {
                         {/* Server response */}
                         {state.message && (
                             <div
-                                className={`rounded-md border px-4 py-3 ${
-                                    state.success
+                                className={`rounded-md border px-4 py-3 ${state.success
                                         ? "border-green-900 bg-green-950/30"
                                         : "border-red-900 bg-red-950/30"
-                                }`}
+                                    }`}
                             >
                                 <p
-                                    className={`text-sm ${
-                                        state.success
+                                    className={`text-sm ${state.success
                                             ? "text-green-400"
                                             : "text-red-400"
-                                    }`}
+                                        }`}
                                 >
                                     {state.message}
                                 </p>
