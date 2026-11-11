@@ -24,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head> <meta name="google-site-verification" content="zfhCcmxuZpPHXv9sIj9QbLQbyIKTj4ZqT23aawNNnhI" /></head>
       <body className="bg-[#0d0d0d]">
           {children}
       </body>
